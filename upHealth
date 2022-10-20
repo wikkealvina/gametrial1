@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UpHealthTrigger : MonoBehaviour
+{
+    // Start is called before the first frame update
+    int health;
+    void Start()
+    {
+        health = 3;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    void OnCollisionEnter(Collision col){
+      if(health == 0){
+         gameObject.transform.position += new Vector3(0, 3f, 0);
+         Debug.Log("Health is " + health);
+      }else{
+        health -= 1;
+        Debug.Log("Health is " + health);
+      }
+    }
+}
