@@ -1,0 +1,79 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MovePlayer : MonoBehaviour
+{
+    // Start is called before the first frame update
+    float speed = 0.1f;
+    Rigidbody rb;
+    bool isGrounded;
+    public GameObject Bullet;
+
+ 
+
+    void Start()
+    {
+        rb = this.GetComponent<Rigidbody>();
+        
+    }
+
+    // Update is called once per frame
+    void Update(){
+      if (Input.GetMouseButtonDown(0)){
+            Instantiate(Bullet);
+            Debug.Log("Pressed primary button.");
+      }
+    }
+
+    void OnCollisionStay()
+         {
+             isGrounded = true;
+         }
+
+    void FixedUpdate(){
+      if (Input.GetKey(KeyCode.Space) && isGrounded){
+        jump();
+        isGrounded = false;
+      }
+      
+      if(Input.GetKey(KeyCode.W)){
+        moveForward();
+      } 
+
+      if(Input.GetKey(KeyCode.A)){
+        rotateLeft();
+      }
+
+      if(Input.GetKey(KeyCode.S)){
+        moveBackward();
+      }
+
+      if(Input.GetKey(KeyCode.D)){
+        rotateRight();
+      }
+
+      
+    }
+
+    void moveForward(){
+        rb.MovePosition(transform.position + transform.forward * speed);
+    }
+
+    void moveBackward(){
+        rb.MovePosition(transform.position - transform.forward * speed);
+    }
+
+    void rotateLeft(){
+        rb.MoveRotation(transform.rotation * Quaternion.Euler(0, -2, 0));
+    }
+
+    void rotateRight(){
+        rb.MoveRotation(transform.rotation * Quaternion.Euler(0, 2, 0));
+    }
+
+    void jump(){
+      rb.AddForce(new Vector3(0, 2, 0), ForceMode.Impulse);
+    }
+    
+}
